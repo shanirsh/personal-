@@ -63,10 +63,13 @@ li { font-size: 16px; line-height: 1.5; }
 footer { display: flex; gap: 25px; margin-top: 34px; padding-top: 25px; border-top: 1px solid var(--border); font-size: 16px; }
 @media (max-width: 600px) {
   main { margin: 36px auto 42px; padding: 0 25px; }
-  header { grid-template-columns: 1fr; gap: 25px; }
-  .portrait-frame { width: 160px; margin-bottom: 3px; }
-  .portrait { width: 160px; height: 160px; }
-  h1 { font-size: 32px; margin-bottom: 19px; }
+  header { grid-template-columns: minmax(0, 1fr) 88px; column-gap: 18px; row-gap: 25px; align-items: center; }
+  .header-copy { display: contents; }
+  .portrait-frame { grid-column: 2; grid-row: 1; width: 88px; margin: 0; padding-top: 0; }
+  .portrait { width: 88px; height: 88px; }
+  .portrait-frame::after { width: 18px; height: 18px; left: -5px; bottom: -5px; }
+  h1 { grid-column: 1; grid-row: 1; font-size: 29px; letter-spacing: .055em; margin: 0; }
+  .intro-copy { grid-column: 1 / -1; grid-row: 2; }
   p { font-size: 16px; line-height: 1.75; }
   section { margin-top: 34px; }
   h2 { margin-bottom: 17px; }
@@ -80,7 +83,9 @@ footer { display: flex; gap: 25px; margin-top: 34px; padding-top: 25px; border-t
 }
 @media (max-width: 360px) {
   main { padding: 0 21px; }
-  h1 { font-size: 29px; letter-spacing: .075em; }
+  header { grid-template-columns: minmax(0, 1fr) 76px; column-gap: 14px; }
+  .portrait-frame, .portrait { width: 76px; height: 76px; }
+  h1 { font-size: 26px; letter-spacing: .04em; }
   .projects li { grid-template-columns: 74px minmax(0, 1fr); gap: 12px; }
   .connect-links { column-gap: 22px; }
 }
