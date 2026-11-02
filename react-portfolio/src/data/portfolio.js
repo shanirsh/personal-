@@ -1,77 +1,22 @@
 export const socialLinks = [
-  {
-    href: 'https://www.linkedin.com/in/shan-irshad/',
-    icon: 'fab fa-linkedin-in',
-    label: 'linkedin',
-  },
-  {
-    href: 'https://github.com/shanirsh',
-    icon: 'fab fa-github',
-    label: 'github',
-  },
-  {
-    href: 'mailto:shanirshad8@gmail.com',
-    icon: 'far fa-envelope',
-    label: 'email',
-  },
+  { href: 'https://x.com/shanirshad_', label: 'X' },
+  { href: 'https://github.com/shanirsh', label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/shan-irshad/', label: 'LinkedIn' },
+  { href: 'mailto:shanirshad8@gmail.com', label: 'Email' },
 ];
-
+// TODO: Add the approved public résumé URL or a PDF in public/.
+export const resumeUrl = null;
 export const experiences = [
-  {
-    id: 'capitalone',
-    date: 'current',
-    company: 'Capital One',
-    title: 'product manager',
-    logo: '/images/capitalone-logo.png',
-    description: 'product development program.',
-  },
-  {
-    id: 'lvlup',
-    date: 'current',
-    company: 'LvlUp VC',
-    title: 'venture',
-    logo: '/images/lvlup_vc_logo.jpeg',
-    description: "selected for lvlup vc's residency program, partnering with ai founders on thesis-driven strategy, category creation, and scaling.",
-  },
-  {
-    id: 'mastercard',
-    date: '2025',
-    company: 'Mastercard',
-    title: 'platform engineer',
-    logo: '/images/mastercard-logo.png',
-    description: 'ai tooling for incident triage and infra automation at scale.',
-  },
-  {
-    id: 'nutrify',
-    date: '2025',
-    company: 'Nutrify AI',
-    title: 'product engineer',
-    logo: '/images/nutrify-logo.jpeg',
-    description: 'shipped llm and computer vision features for an ai nutrition platform.',
-  },
-  {
-    id: 'sirius',
-    date: '2024',
-    company: 'Sirius Development',
-    title: 'forward deployed engineer',
-    logo: '/images/sirius-logo.png',
-    description: 'ci/cd automation and cloud infrastructure on azure.',
-  },
+  { id: 'capitalone', date: '2026 — Present', company: 'Capital One', title: 'Product Manager', logo: '/images/capitalone-logo.png', description: 'Financial recovery and auto finance, through the Product Development Program. Working with engineering on payment workflows, balance resolution, and the backend processes that support them.' },
+  { id: 'lvlup', date: 'Current', company: 'LvlUp VC', title: 'Venture residency', logo: '/images/lvlup_vc_logo.jpeg', description: 'Selected for the residency program, partnering with AI founders on thesis-driven strategy, category creation, and scaling.' },
+  { id: 'mastercard', date: '2025', company: 'Mastercard', title: 'Platform Engineering Intern', logo: '/images/mastercard-logo.png', description: 'Worked on AI tooling for incident triage and infrastructure automation at scale.' },
+  { id: 'nutrify', date: '2025', company: 'Nutrify AI', title: 'Product Engineering', logo: '/images/nutrify-logo.jpeg', description: 'Shipped LLM and computer vision features for an AI nutrition platform.' },
+  { id: 'sirius', date: '2024', company: 'Sirius Development', title: 'Forward Deployed Engineering', logo: '/images/sirius-logo.png', description: 'Worked on CI/CD automation and cloud infrastructure on Azure.' },
 ];
-
 export const products = [
-  {
-    id: 'prismo',
-    title: 'Prismo',
-    description: 'control plane for ai coding agents — measure waste, enforce policies, and verify tasks across repos.',
-    link: 'https://getprismo.dev',
-    logo: '/images/prismo-logo.png',
-  },
-  {
-    id: 'ghosted',
-    title: 'Ghosted',
-    description: 'deploy cloud infrastructure with plain english.',
-    link: 'https://ghostedai.net',
-    logo: '/images/ghosted-logo.png',
-  },
+  { id: 'prismo', title: 'Prismo', shortDescription: 'Measure context and token usage in AI coding agents.', category: 'Developer tools', description: 'A control plane for AI coding agents. Measure wasted context and token usage, enforce policies, and verify tasks across repositories.', stack: 'Python / FastAPI / PostgreSQL / Docker / Next.js', link: 'https://getprismo.dev', logo: '/images/prismo-logo.png' },
+  { id: 'ghosted', title: 'Ghosted', shortDescription: 'Deploy cloud infrastructure with plain English.', category: 'Cloud infrastructure', description: 'Deploy cloud infrastructure with plain English. An exploration of how natural language can make infrastructure workflows more approachable.', link: 'https://ghostedai.net', logo: '/images/ghosted-logo.png' },
+  { id: 'tr8de', title: 'TR8DE', shortDescription: 'Experimental stock forecasting across multiple time horizons.', category: 'Applied machine learning', description: 'An experimental forecasting system that estimates the probability of stocks outperforming a benchmark across multiple time horizons.', link: 'https://tr8de.vercel.app/' },
 ];
+// Populate as { title, date, href }; the section appears when entries are added.
+export const writing = [];

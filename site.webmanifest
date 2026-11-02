@@ -1,15 +1,9 @@
 {
-  "name": "shan irshad",
-  "short_name": "shan irshad",
-  "icons": [
-    {
-      "src": "/favicon.png?v=2",
-      "sizes": "64x64",
-      "type": "image/png"
-    }
-  ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "name": "Shan Irshad",
+  "short_name": "Shan Irshad",
+  "icons": [{ "src": "/favicon.png?v=2", "sizes": "64x64", "type": "image/png" }],
+  "theme_color": "#f7f5ef",
+  "background_color": "#f7f5ef",
   "display": "standalone",
   "start_url": "/"
 }
