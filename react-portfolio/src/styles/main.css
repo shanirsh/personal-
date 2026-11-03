@@ -8,6 +8,7 @@
   --accent: #667762;
   --border: #dedfd5;
   font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  text-transform: lowercase;
   color: var(--primary);
   background: var(--paper);
   font-synthesis: none;
