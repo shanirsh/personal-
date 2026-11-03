@@ -16,7 +16,7 @@ export const experiences = [
 export const products = [
   { id: 'prismo', title: 'Prismo', shortDescription: 'Measure context and token usage in AI coding agents.', category: 'Developer tools', description: 'A control plane for AI coding agents. Measure wasted context and token usage, enforce policies, and verify tasks across repositories.', stack: 'Python / FastAPI / PostgreSQL / Docker / Next.js', link: 'https://getprismo.dev', logo: '/images/prismo-logo.png' },
   { id: 'ghosted', title: 'Ghosted', shortDescription: 'Deploy cloud infrastructure with plain English.', category: 'Cloud infrastructure', description: 'Deploy cloud infrastructure with plain English. An exploration of how natural language can make infrastructure workflows more approachable.', link: 'https://ghostedai.net', logo: '/images/ghosted-logo.png' },
-  { id: 'tr8de', title: 'TR8DE', shortDescription: 'Experimental stock forecasting across multiple time horizons.', category: 'Applied machine learning', description: 'An experimental forecasting system that estimates the probability of stocks outperforming a benchmark across multiple time horizons.', link: 'https://tr8de.vercel.app/' },
+  { id: 'tr8de', title: 'TR8DE', shortDescription: 'Predictive models and trading agents powered by filings and market intelligence.', category: 'Applied machine learning', description: 'Predictive models and trading agents powered by filings and market intelligence.', link: 'https://tr8de.vercel.app/' },
 ];
 // Populate as { title, date, href }; the section appears when entries are added.
 export const writing = [];
