@@ -8,7 +8,7 @@ export default function App() {
       <div className="header-copy">
       <h1>Shan Irshad</h1>
       <div className="intro-copy">
-        <p>I’m a Product Manager at <a href="https://www.capitalone.com/">Capital One</a>, working on financial recovery and payment workflows. Alongside that, I’m part of LvlUp Ventures’ residency, working with AI founders on strategy and growth. My background is in platform engineering at <a href="https://www.mastercard.com/">Mastercard</a> and applied AI at <a href="https://www.nutrifyai.app/">Nutrify AI</a>, where I shipped LLM and computer vision features.</p>
+        <p>I’m a Product Manager at <a href="https://www.capitalone.com/">Capital One</a>, working on financial recovery and payment workflows. I’m also a venture analyst at <a href="https://www.lvlup.vc/">LvlUp Ventures</a>, partnering with startups in AI infrastructure. My background is in platform engineering at <a href="https://www.mastercard.com/">Mastercard</a> and applied AI at <a href="https://www.nutrifyai.app/">Nutrify AI</a>, where I shipped LLM and computer vision features.</p>
         <p>I like making the tools I use easier to understand. That led me to build <a href="https://getprismo.dev">Prismo</a> for measuring context and token usage in AI coding agents, and <a href="https://ghostedai.net">Ghosted</a> for deploying cloud infrastructure. I’m now working on <a href="https://tr8de.vercel.app/">TR8DE</a>, an experimental stock forecasting system.</p>
         <p>I studied Computer Science at <a href="https://www.utdallas.edu/">UT Dallas</a>. You can reach me on <a href="https://x.com/shanirshad_">X</a>, <a href="https://www.linkedin.com/in/shan-irshad/">LinkedIn</a>, or by <a href="mailto:shanirshad8@gmail.com">email</a>.</p>
       </div>
@@ -30,7 +30,7 @@ export default function App() {
       <ul className="connect-links">
         <li><a href="https://github.com/shanirsh">github</a></li>
         <li><a href="https://www.linkedin.com/in/shan-irshad/">linkedin</a></li>
-        <li><a href="https://x.com/shanirshad_">twitter / X</a></li>
+        <li><a href="https://x.com/shanirshad_">x</a></li>
         <li><a href="mailto:shanirshad8@gmail.com">email</a></li>
         {resumeUrl && <li><a href={resumeUrl}>resume</a></li>}
       </ul>

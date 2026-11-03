@@ -8,7 +8,7 @@ export const socialLinks = [
 export const resumeUrl = null;
 export const experiences = [
   { id: 'capitalone', date: '2026 — Present', company: 'Capital One', title: 'Product Manager', logo: '/images/capitalone-logo.png', description: 'Financial recovery and auto finance, through the Product Development Program. Working with engineering on payment workflows, balance resolution, and the backend processes that support them.' },
-  { id: 'lvlup', date: 'Current', company: 'LvlUp VC', title: 'Venture residency', logo: '/images/lvlup_vc_logo.jpeg', description: 'Selected for the residency program, partnering with AI founders on thesis-driven strategy, category creation, and scaling.' },
+  { id: 'lvlup', date: 'Current', company: 'LvlUp Ventures', title: 'Venture Analyst', link: 'https://www.lvlup.vc/', logo: '/images/lvlup_vc_logo.jpeg', description: 'Partnering with startups in AI infrastructure.' },
   { id: 'mastercard', date: '2025', company: 'Mastercard', title: 'Platform Engineering Intern', logo: '/images/mastercard-logo.png', description: 'Worked on AI tooling for incident triage and infrastructure automation at scale.' },
   { id: 'nutrify', date: '2025', company: 'Nutrify AI', title: 'Product Engineering', logo: '/images/nutrify-logo.jpeg', description: 'Shipped LLM and computer vision features for an AI nutrition platform.' },
   { id: 'sirius', date: '2024', company: 'Sirius Development', title: 'Forward Deployed Engineering', logo: '/images/sirius-logo.png', description: 'Worked on CI/CD automation and cloud infrastructure on Azure.' },
