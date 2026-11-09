@@ -8,8 +8,8 @@ export default function App() {
       <div className="header-copy">
       <h1>Shan Irshad</h1>
       <div className="intro-copy">
-        <p>I work on financial recovery and payment workflows as a product manager at <a href="https://www.capitalone.com/">Capital One</a>. Before that, I worked on platform engineering at <a href="https://www.mastercard.com/">Mastercard</a> and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">Nutrify AI</a>. I also partner with early stage startups in AI infra as a venture analyst at <a href="https://www.lvlup.vc/">LvlUp Ventures</a>.</p>
-        <p>The question behind <a href="https://getprismo.dev">Prismo</a> was where coding agents spend their context and tokens. <a href="https://ghostedai.net">Ghosted</a> started with a different one: what would it take to deploy cloud infra in plain English? I’m now working on <a href="https://tr8de.vercel.app/">TR8DE</a>: predictive models and trading agents powered by filings and market intelligence.</p>
+        <p>I work on financial recovery and payment workflows as a product manager at <a href="https://www.capitalone.com/">Capital One</a>. At <a href="https://www.mastercard.com/">Mastercard</a>, the problem was how to triage incidents faster and automate repetitive infra work. At <a href="https://www.nutrifyai.app/">Nutrify AI</a>, I applied language and vision models to nutrition tracking. I also partner with early stage startups in AI infra as a venture analyst at <a href="https://www.lvlup.vc/">LvlUp Ventures</a>.</p>
+        <p>My own work follows the cost of running AI: <a href="https://getprismo.dev">Prismo</a> began as a model router and evolved into tools for reducing coding agent context and controlling model spend.</p>
         <p>I studied Computer Science at <a href="https://www.utdallas.edu/">UT Dallas</a>. You can reach me on <a href="https://x.com/shanirshad_">X</a>, <a href="https://www.linkedin.com/in/shan-irshad/">LinkedIn</a>, or by <a href="mailto:shanirshad8@gmail.com">email</a>.</p>
       </div>
       </div>
