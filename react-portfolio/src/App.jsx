@@ -1,10 +1,12 @@
 import { products, resumeUrl } from './data/portfolio';
+import { useState } from 'react';
 import './styles/main.css';
 
 export default function App() {
+  const [portraitReady, setPortraitReady] = useState(false);
   return <main>
     <header>
-      <div className="portrait-frame"><img className="portrait" src="/images/profile-pic.jpg" alt="Shan Irshad" width="180" height="180" decoding="async" /></div>
+      <div className={`portrait-frame${portraitReady ? ' portrait-ready' : ''}`}><img className="portrait" src="/images/profile-pic.jpg" alt="Shan Irshad" width="180" height="180" decoding="async" onLoad={() => setPortraitReady(true)} /></div>
       <div className="header-copy">
       <h1>Shan Irshad</h1>
       <div className="intro-copy">
