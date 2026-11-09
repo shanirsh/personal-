@@ -1,10 +1,38 @@
 import { products, resumeUrl } from './data/portfolio';
+import { useEffect, useRef, useState } from 'react';
 import './styles/main.css';
 
 export default function App() {
-  return <main>
+  const portraitRef = useRef(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    let frame;
+    const timeout = setTimeout(reveal, 1400);
+    function reveal() {
+      if (cancelled) return;
+      clearTimeout(timeout);
+      frame = requestAnimationFrame(() => {
+        if (!cancelled) setReady(true);
+      });
+    }
+    const photo = portraitRef.current;
+    Promise.allSettled([
+      photo?.decode() ?? Promise.resolve(),
+      document.fonts.load('400 34px Spectral'),
+      document.fonts.load('400 16px Manrope'),
+    ]).then(reveal);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return <main className={ready ? 'page-ready' : 'page-pending'}>
     <header>
-      <div className="portrait-frame"><img className="portrait" src="/images/profile-pic.jpg" alt="Shan Irshad" width="180" height="180" decoding="async" /></div>
+      <div className="portrait-frame"><img ref={portraitRef} className="portrait" src="/images/profile-pic.jpg" alt="Shan Irshad" width="180" height="180" decoding="async" fetchPriority="high" loading="eager" /></div>
       <div className="header-copy">
       <h1>Shan Irshad</h1>
       <div className="intro-copy">
@@ -32,7 +60,7 @@ export default function App() {
         <li><a href="https://www.linkedin.com/in/shan-irshad/">linkedin</a></li>
         <li><a href="https://x.com/shanirshad_">x</a></li>
         <li><a href="mailto:shanirshad8@gmail.com">email</a></li>
-        <li><a href="https://calendly.com/shanirshad8/30min">calendly</a></li>
+        <li><a href="https://calendly.com/shanirshad8/30min">schedule a chat</a></li>
         {resumeUrl && <li><a href={resumeUrl}>resume</a></li>}
       </ul>
     </section>
