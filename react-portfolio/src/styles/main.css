@@ -89,46 +89,10 @@ footer { display: flex; gap: 25px; margin-top: 34px; padding-top: 25px; border-t
   .connect-links { column-gap: 22px; }
 }
 @keyframes page-arrive {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes portrait-resolve {
-  from { opacity: 0; filter: grayscale(.65); }
-  45% { opacity: 1; filter: grayscale(.35); }
-  to { opacity: 1; filter: grayscale(0); }
-}
-@keyframes portrait-slice-a {
-  0%, 14% { opacity: 0; transform: translateX(0); clip-path: inset(18% 0 67%); }
-  15%, 22% { opacity: .8; transform: translateX(5px); clip-path: inset(18% 0 67%); }
-  23%, 40% { opacity: 0; transform: translateX(0); }
-  41%, 47% { opacity: .6; transform: translateX(-3px); clip-path: inset(63% 0 27%); }
-  48%, 100% { opacity: 0; transform: translateX(0); }
-}
-@keyframes portrait-slice-b {
-  0%, 25% { opacity: 0; transform: translateX(0); clip-path: inset(43% 0 48%); }
-  26%, 32% { opacity: .7; transform: translateX(-4px); }
-  33%, 51% { opacity: 0; transform: translateX(0); }
-  52%, 56% { opacity: .45; transform: translateX(2px); clip-path: inset(78% 0 16%); }
-  57%, 100% { opacity: 0; transform: translateX(0); }
+  from { opacity: .15; }
+  to { opacity: 1; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  h1 { animation: page-arrive 720ms cubic-bezier(.22, 1, .36, 1) both; }
-  .intro-copy { animation: page-arrive 780ms cubic-bezier(.22, 1, .36, 1) 90ms both; }
-  section { animation: page-arrive 780ms cubic-bezier(.22, 1, .36, 1) 170ms both; }
-  section + section { animation-delay: 240ms; }
-  .portrait-ready .portrait { animation: portrait-resolve 680ms ease-out both; }
-  .portrait-ready::before, .portrait-ready::after {
-    content: '';
-    position: absolute;
-    inset: 3px 0 0;
-    background: url('/images/profile-pic.jpg') center 68% / cover no-repeat;
-    pointer-events: none;
-    opacity: 0;
-    animation: portrait-slice-a 680ms steps(1, end) both;
-  }
-  .portrait-ready::after { animation-name: portrait-slice-b; }
-}
-@media (max-width: 600px) and (prefers-reduced-motion: no-preference) {
-  .portrait-ready::before, .portrait-ready::after { top: 0; }
+  main { animation: page-arrive 420ms cubic-bezier(.2, .65, .3, 1); }
 }
 @media (prefers-reduced-motion: reduce) { a { transition: none; } }
