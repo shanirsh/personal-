@@ -5,20 +5,20 @@ import './styles/main.css';
 const writing = []; // { title, url, date }
 
 export default function App() {
-  const [photoMissing, setPhotoMissing] = useState(false);
+  const [portraitSrc, setPortraitSrc] = useState("/me.jpg");
   const evalPost = writing.find(({ title }) => /agent eval/i.test(title));
 
   return <main>
     <header>
       <div className="portrait-frame">
-        {!photoMissing && <img className="portrait" src="/me.jpg" alt="Shan Irshad" width="180" height="180" onError={() => setPhotoMissing(true)} />}
+        {portraitSrc && <img className="portrait" src={portraitSrc} alt="Shan Irshad" width="180" height="180" onError={() => setPortraitSrc(portraitSrc === "/me.jpg" ? "/images/profile-pic.jpg" : null)} />}
       </div>
       <div className="header-copy">
         <h1>Shan Irshad</h1>
         <div className="intro-copy">
-          <p>i build agent tooling and work on payment recovery at capital one. before that i built incident triage and infra automation at mastercard,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at nutrify ai. i'm also a venture analyst at lvlup ventures, working with early stage ai infra startups.</p>
+          <p>i build agent tooling and work on payment recovery at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
           <p>i'm currently exploring {evalPost ? <a href={evalPost.url}>agent evals</a> : 'agent evals'}: how to assess an agent's decisions, task completion, and reliability.</p>
-          <p>i studied computer science at ut dallas.</p>
+          <p>i studied computer science at <a href="https://www.utdallas.edu/">ut dallas</a>.</p>
         </div>
       </div>
     </header>
