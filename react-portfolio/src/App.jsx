@@ -1,5 +1,5 @@
 import { products } from './data/portfolio';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './styles/main.css';
 
 const writing = []; // { title, url, date }
@@ -8,10 +8,37 @@ export default function App() {
   const [portraitSrc, setPortraitSrc] = useState("/me.jpg");
   const evalPost = writing.find(({ title }) => /agent eval/i.test(title));
 
-  return <main>
+  const portraitRef = useRef(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    let frame;
+    const timeout = setTimeout(reveal, 1400);
+    function reveal() {
+      if (cancelled) return;
+      clearTimeout(timeout);
+      frame = requestAnimationFrame(() => {
+        if (!cancelled) setReady(true);
+      });
+    }
+    const photo = portraitRef.current;
+    Promise.allSettled([
+      photo?.decode() ?? Promise.resolve(),
+      document.fonts.load('400 34px Spectral'),
+      document.fonts.load('400 16px Manrope'),
+    ]).then(reveal);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+      cancelAnimationFrame(frame);
+    };
+  }, [portraitSrc]);
+
+  return <main className={ready ? 'page-ready' : 'page-pending'}>
     <header>
       <div className="portrait-frame">
-        {portraitSrc && <img className="portrait" src={portraitSrc} alt="Shan Irshad" width="180" height="180" onError={() => setPortraitSrc(portraitSrc === "/me.jpg" ? "/images/profile-pic.jpg" : null)} />}
+        {portraitSrc && <img ref={portraitRef} className="portrait" src={portraitSrc} alt="Shan Irshad" width="180" height="180" onError={() => setPortraitSrc(portraitSrc === "/me.jpg" ? "/images/profile-pic.jpg" : null)} />}
       </div>
       <div className="header-copy">
         <h1>Shan Irshad</h1>
