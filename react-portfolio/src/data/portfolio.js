@@ -14,9 +14,11 @@ export const experiences = [
   { id: 'sirius', date: '2024', company: 'Sirius Development', title: 'Forward Deployed Engineering', logo: '/images/sirius-logo.png', description: 'Worked on CI/CD automation and cloud infrastructure on Azure.' },
 ];
 export const products = [
-  { id: 'prismo', title: 'Prismo', shortDescription: 'a control plane for ai coding agents: context, spend, policies, and task verification.', category: 'Developer tools', description: 'Originally a model router, Prismo is now a control plane for AI coding agents: measure wasted context and token usage, manage model spend, enforce policies, and verify tasks across repositories.', stack: 'Python / FastAPI / PostgreSQL / Docker / Next.js', link: 'https://getprismo.dev', logo: '/images/prismo-logo.png' },
-  { id: 'tr8de', title: 'TR8DE', shortDescription: 'Predictive models and trading agents powered by filings and market intelligence.', category: 'Applied machine learning', description: 'Predictive models and trading agents powered by filings and market intelligence.', link: 'https://tr8de.vercel.app/' },
-  { id: 'ghosted', title: 'Ghosted', shortDescription: 'Deploy cloud infra with plain English.', category: 'Cloud infra', description: 'Deploy cloud infra with plain English. An exploration of how natural language can make infra workflows more approachable.', link: 'https://ghostedai.net', logo: '/images/ghosted-logo.png' },
+  { id: 'prismo', title: 'Prismo', shortDescription: 'a control plane for ai coding agents. tracks context and spend, enforces policies, and verifies tasks before they merge.', category: 'Developer tools', description: 'Originally a model router, Prismo is now a control plane for AI coding agents: measure wasted context and token usage, manage model spend, enforce policies, and verify tasks across repositories.', stack: 'Python / FastAPI / PostgreSQL / Docker / Next.js', link: 'https://getprismo.dev', logo: '/images/prismo-logo.png' },
+  // TODO: add one concrete detail or result.
+  { id: 'tr8de', title: 'TR8DE', shortDescription: 'predictive models and trading agents powered by filings and market intelligence.', category: 'Applied machine learning', description: 'Predictive models and trading agents powered by filings and market intelligence.', link: 'https://tr8de.vercel.app/' },
+  // TODO: add one concrete detail, e.g. what it provisions or how many deploys.
+  { id: 'ghosted', title: 'Ghosted', shortDescription: 'deploy cloud infra with plain english.', category: 'Cloud infra', description: 'Deploy cloud infra with plain English. An exploration of how natural language can make infra workflows more approachable.', link: 'https://ghostedai.net', logo: '/images/ghosted-logo.png' },
 ];
 // Populate as { title, date, href }; the section appears when entries are added.
 export const writing = [];
