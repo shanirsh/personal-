@@ -43,7 +43,7 @@ export default function App() {
       <div className="header-copy">
         <h1>Shan Irshad</h1>
         <div className="intro-copy">
-          <p>i build agent tooling and work on payment recovery at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
+          <p>i build agent tooling and work on payment recovery at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify&#160;ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
           <p>i'm currently exploring {evalPost ? <a href={evalPost.url}>agent evals</a> : 'agent evals'}: how to assess an agent's decisions, task completion, and reliability.</p>
           <p>i studied computer science at <a href="https://www.utdallas.edu/">ut dallas</a>.</p>
         </div>

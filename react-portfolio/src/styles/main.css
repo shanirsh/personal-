@@ -39,9 +39,9 @@ p { margin: 0; font-size: 16px; line-height: 1.72; font-weight: 400; letter-spac
 .intro-copy p { color: var(--secondary); line-height: 1.7; }
 .intro-copy p + p { margin-top: 14px; }
 .intro-copy .intro-contact { display: flex; gap: 22px; margin-top: 20px; font-size: 16px; }
-a { color: var(--primary); font-weight: inherit; text-decoration: underline; text-decoration-color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: .23em; }
+a { color: var(--primary); font-weight: inherit; text-decoration: underline; text-decoration-color: var(--border); text-decoration-color: color-mix(in srgb, var(--accent) 45%, var(--paper)); text-decoration-thickness: 1px; text-underline-offset: .23em; text-decoration-skip-ink: auto; transition: color 160ms ease, text-decoration-color 160ms ease, text-underline-offset 160ms ease; }
 @media (hover: hover) {
-  a:hover { text-decoration-color: var(--accent); }
+  a:hover { color: var(--accent); text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: .32em; }
 }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 section { margin-top: 48px; padding-top: 0; }
@@ -97,3 +97,4 @@ footer { display: flex; gap: 25px; margin-top: 34px; padding-top: 25px; border-t
   .page-pending { opacity: 0; }
   .page-ready { animation: page-arrive 620ms cubic-bezier(.22, 1, .36, 1) both; }
 }
+@media (prefers-reduced-motion: reduce) { a { transition: none; } }
