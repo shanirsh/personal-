@@ -5,45 +5,27 @@ import './styles/main.css';
 const writing = []; // { title, url, date }
 
 export default function App() {
-  const [portraitSrc, setPortraitSrc] = useState("/me.jpg");
   const evalPost = writing.find(({ title }) => /agent eval/i.test(title));
-
   const portraitRef = useRef(null);
-  const [ready, setReady] = useState(false);
+  const [portraitReady, setPortraitReady] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-    let frame;
-    const timeout = setTimeout(reveal, 1400);
-    function reveal() {
-      if (cancelled) return;
-      clearTimeout(timeout);
-      frame = requestAnimationFrame(() => {
-        if (!cancelled) setReady(true);
-      });
-    }
-    const photo = portraitRef.current;
-    Promise.allSettled([
-      photo?.decode() ?? Promise.resolve(),
-      document.fonts.load('400 34px Spectral'),
-      document.fonts.load('400 16px Manrope'),
-    ]).then(reveal);
-    return () => {
-      cancelled = true;
-      clearTimeout(timeout);
-      cancelAnimationFrame(frame);
-    };
-  }, [portraitSrc]);
+    let active = true;
+    portraitRef.current.decode().then(() => {
+      if (active) setPortraitReady(true);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, []);
 
-  return <main className={ready ? 'page-ready' : 'page-pending'}>
+  return <main>
     <header>
       <div className="portrait-frame">
-        {portraitSrc && <img ref={portraitRef} className="portrait" src={portraitSrc} alt="Shan Irshad" width="180" height="180" onError={() => setPortraitSrc(portraitSrc === "/me.jpg" ? "/images/profile-pic.jpg" : null)} />}
+        <img ref={portraitRef} className={portraitReady ? 'portrait portrait-ready' : 'portrait'} src="/images/portrait.webp" alt="Shan Irshad" width="180" height="180" fetchPriority="high" />
       </div>
       <div className="header-copy">
         <h1>Shan Irshad</h1>
         <div className="intro-copy">
-          <p>i build agent tooling and work on payment recovery at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify&#160;ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
+          <p>i’m a fintech product manager at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify&#160;ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
           <p>i'm currently exploring {evalPost ? <a href={evalPost.url}>agent evals</a> : 'agent evals'}: how to assess an agent's decisions, task completion, and reliability.</p>
           <p>i studied computer science at <a href="https://www.utdallas.edu/">ut dallas</a>.</p>
         </div>
