@@ -25,8 +25,8 @@ export default function App() {
       <div className="header-copy">
         <h1>Shan Irshad</h1>
         <div className="intro-copy">
-          <p>i’m a fintech product manager at <a href="https://www.capitalone.com/">capital one</a>. before that i built incident triage and infra automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} and applied language and vision models to nutrition tracking at <a href="https://www.nutrifyai.app/">nutrify&#160;ai</a>. i'm also a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a>, working with early stage ai infra startups.</p>
-          <p>i'm currently exploring {evalPost ? <a href={evalPost.url}>agent evals</a> : 'agent evals'}: how to assess an agent's decisions, task completion, and reliability.</p>
+          <p>i’m working on {evalPost ? <a href={evalPost.url}>agent reliability</a> : 'agent reliability'}: evals, rl environments, and safety. specifically, how to verify long-horizon agent tasks and bound what an agent can do without oversight.</p>
+          <p>i got into it from the infra side, building incident triage and automation at <a href="https://www.mastercard.com/">mastercard</a>,{/* TODO: add one concrete outcome, e.g. "cut triage time X%" */} then applying language and vision models at <a href="https://www.nutrifyai.app/">nutrify&#160;ai</a>. now i’m a fintech pm at <a href="https://www.capitalone.com/">capital one</a> and a venture analyst at <a href="https://www.lvlup.vc/">lvlup ventures</a> working with early stage startups.</p>
           <p>i studied computer science at <a href="https://www.utdallas.edu/">ut dallas</a>.</p>
         </div>
       </div>
