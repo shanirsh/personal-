@@ -1,6 +1,7 @@
 import { products } from './data/portfolio';
 import { useEffect, useRef, useState } from 'react';
 import './styles/main.css';
+import PaperAtmosphere from './ui/PaperAtmosphere';
 
 const writing = []; // { title, url, date }
 
@@ -17,7 +18,7 @@ export default function App() {
     return () => { active = false; };
   }, []);
 
-  return <main>
+  return <><PaperAtmosphere /><main>
     <header>
       <div className="portrait-frame">
         <img ref={portraitRef} className={portraitReady ? 'portrait portrait-ready' : 'portrait'} src="/images/portrait.webp" alt="Shan Irshad" width="180" height="180" fetchPriority="high" />
@@ -35,7 +36,7 @@ export default function App() {
     <section aria-labelledby="projects-title">
       <h2 id="projects-title">Selected work</h2>
       <ul className="projects">
-        {products.map(project => <li key={project.id}>
+        {products.map(project => <li key={project.id} data-project={project.id}>
           <span>{project.link ? <a href={project.link}>{project.title}</a> : project.title}</span>
           <div className="project-copy"><p>{project.shortDescription}</p></div>
         </li>)}
@@ -62,5 +63,5 @@ export default function App() {
         <li><a href="https://calendly.com/shanirshad8/30min">schedule a chat</a></li>
       </ul>
     </section>
-  </main>;
+  </main></>;
 }

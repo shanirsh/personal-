@@ -99,3 +99,8 @@ footer { display: flex; gap: 25px; margin-top: 34px; padding-top: 25px; border-t
   .portrait { transition: opacity 420ms ease-out; }
 }
 @media (prefers-reduced-motion: reduce) { a { transition: none; } }
+
+
+main { position: relative; z-index: 1; }
+
+.paper-atmosphere { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
