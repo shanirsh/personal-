@@ -59,11 +59,6 @@ const links = [
 
 // Original assets are sampled in the browser. Backgrounds and screenshot chrome
 // never become particles. Pale marks use charcoal so they read on ivory.
-const cycle = ['prismo', 'tr8de', 'ghosted', 'capitalone', 'mastercard', 'nutrify', 'lvlup', 'utdallas'];
-const openingDelay = 1800;
-const cycleDuration = 10000;
-const formationDuration = 4600;
-
 const logoSources = {
   prismo: { src: '/images/prismo-logo.png', mode: 'color' },
   tr8de: { src: '/images/hover-logos/tr8de.png', mode: 'light', crop: [10, 53, 247, 59] },
@@ -136,8 +131,6 @@ export default function PaperAtmosphere() {
     let elapsed = 0;
     let lastDraw = null;
     let stepDuration = 33;
-    let cycleClock = 0;
-    let resumeAt = 0;
     let scrollUntil = 0;
     let manual = null;
     let portraitBounds;
@@ -150,7 +143,8 @@ export default function PaperAtmosphere() {
     let fallbackSamples = {};
     let formation = 0;
     const rows = 24;
-    let columns = innerWidth <= 600 ? 96 : 140;
+    let compact = innerWidth <= 600;
+    let columns = compact ? 96 : 140;
     const rowColors = Array.from({ length: rows }, () => [0, 0, 0]);
     const logoSamples = {};
     let disposed = false;
@@ -199,14 +193,19 @@ export default function PaperAtmosphere() {
     function measure() {
       width = innerWidth;
       height = innerHeight;
-      const nextColumns = width <= 600 ? 96 : 140;
+      compact = width <= 600 || width <= 950 && matchMedia('(pointer: coarse)').matches;
+      const nextColumns = compact ? 96 : 140;
       if (columns !== nextColumns) {
         columns = nextColumns;
         grains = createGrains();
       }
-      const scale = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = width * scale;
-      canvas.height = height * scale;
+      const scale = Math.min(devicePixelRatio || 1, compact ? 1.5 : 2);
+      const pixelWidth = Math.round(width * scale);
+      const pixelHeight = Math.round(height * scale);
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
       context.setTransform(scale, 0, 0, scale, 0, 0);
       bounds = document.querySelector('main').getBoundingClientRect();
       textAreas = [...document.querySelectorAll('main p, main h1, main h2, .projects li > span, .connect-links, .portrait-frame')]
@@ -224,8 +223,9 @@ export default function PaperAtmosphere() {
       const radius = margin > 140 ? Math.min(125, margin * 0.37) : narrow ? Math.min(65, width * 0.16) : 72;
       const centerX = margin > 140 ? bounds.right + margin * 0.5
         : narrow ? (portraitBounds.right + width) / 2 : portraitBounds.left + portraitBounds.width / 2;
-      const centerY = margin > 140 ? height * 0.47
+      const preferredY = margin > 140 ? height * 0.47
         : narrow ? portraitBounds.top + portraitBounds.height / 2 : portraitBounds.bottom + 115;
+      const centerY = narrow ? preferredY : Math.max(radius + 12, Math.min(height - radius - 12, preferredY));
       const settle = 1 - Math.exp(-stepDuration / (manual ? 145 : shape ? 260 : 350));
       const colorSettle = 1 - Math.exp(-stepDuration / 140);
       const formationSettle = 1 - Math.exp(-stepDuration / 350);
@@ -234,15 +234,19 @@ export default function PaperAtmosphere() {
       const scattering = Math.sin(formation * Math.PI) * 9;
       rowColors.forEach(color => { color[0] = 0; color[1] = 0; color[2] = 0; });
 
+      // A slow olive-to-stone drift stays quiet until a link supplies its brand colors.
+      const ambientColors = Array.from({ length: rows }, (_, row) => {
+        const warmth = (Math.sin(time * 0.055 + row * 0.08) + 1) / 2;
+        return [83 + warmth * 28, 101 + warmth * 5, 80 + warmth * 16];
+      });
+
       // Position and color evolve together; the strand colors lead the gathering sand.
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
         if (!freeze) {
           let x;
           let y;
-          let red = 83;
-          let green = 101;
-          let blue = 80;
+          let [red, green, blue] = ambientColors[grain.row];
           if (shape) {
             const point = shape[Math.floor(index / grains.length * shape.length)];
             if (point.length > 2) {
@@ -281,7 +285,7 @@ export default function PaperAtmosphere() {
 
       // One stroke per strand replaces thousands of individual canvas strokes.
       const connection = Math.pow(1 - formation, 1.7);
-      const lineOpacity = (0.14 + Math.sin(formation * Math.PI) * 0.12) * connection;
+      const lineOpacity = (0.065 + Math.sin(formation * Math.PI) * 0.18) * connection;
       context.lineWidth = 0.65;
       if (lineOpacity > 0.002) {
         context.globalAlpha = lineOpacity;
@@ -317,22 +321,13 @@ export default function PaperAtmosphere() {
       context.restore();
     }
 
-    function automaticKey() {
-      if (cycleClock < openingDelay) return null;
-      const position = cycleClock - openingDelay;
-      const key = cycle[Math.floor(position / cycleDuration) % cycle.length];
-      // Avoid substituting an illustrative symbol while a logo is downloading.
-      if (key in logoSources && !logoSamples[key]) return null;
-      return position % cycleDuration < formationDuration ? key : null;
-    }
-
     function animate(now) {
       const delta = previous === null ? 0 : Math.min(now - previous, 60);
       previous = now;
       elapsed += delta;
       const scrolling = now < scrollUntil;
-      if (!manual && elapsed >= resumeAt && !scrolling) cycleClock += delta;
-      active = manual || (elapsed >= resumeAt ? automaticKey() : null);
+      const logoVisible = !compact || portraitBounds.bottom > 16 && portraitBounds.top < height - 16;
+      active = logoVisible ? manual : null;
       if (lastDraw === null || now - lastDraw >= 8) {
         stepDuration = lastDraw === null ? 33 : Math.min(now - lastDraw, 100);
         if (!scrolling) draw();
@@ -356,14 +351,6 @@ export default function PaperAtmosphere() {
     function resolve() {
       const link = hovered || focused;
       const next = link ? links.find(([href]) => link.href.includes(href))?.[1] || null : null;
-      if (manual && !next) {
-        // Release back into the current before the automatic sequence continues.
-        resumeAt = elapsed + 2600;
-        if (cycleClock >= openingDelay) {
-          const position = cycleClock - openingDelay;
-          cycleClock = openingDelay + Math.floor(position / cycleDuration) * cycleDuration + formationDuration;
-        }
-      }
       manual = next;
       active = manual;
       if (motion.matches) draw(true);
