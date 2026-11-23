@@ -60,6 +60,8 @@ const links = [
 // Original assets are sampled in the browser. Backgrounds and screenshot chrome
 // never become particles. Pale marks use charcoal so they read on ivory.
 const logoSources = {
+  github: { src: '/images/hover-logos/github.svg', mode: 'alpha' },
+  chat: { src: '/images/hover-logos/calendly.svg', mode: 'alpha' },
   prismo: { src: '/images/prismo-logo.png', mode: 'color' },
   tr8de: { src: '/images/hover-logos/tr8de.png', mode: 'light', crop: [10, 53, 247, 59] },
   ghosted: { src: '/images/ghosted-logo.png', mode: 'white' },
@@ -91,6 +93,7 @@ function sampleLogo(image, { mode, crop }) {
       const low = Math.min(red, green, blue);
       const saturation = high - low;
       let visible = saturation > 35 && high > 75;
+      if (mode === 'alpha') visible = true;
       if (mode === 'red') visible = red > 90 && red > green * 1.5 && red > blue * 1.4;
       if (mode === 'green') visible = green > 65 && green > red * 1.15 && green > blue * 1.2;
       if (mode === 'pink') visible = high > 75 && saturation > 8 && red > green * 1.02 && blue > green * 1.01;
@@ -235,9 +238,14 @@ export default function PaperAtmosphere() {
       rowColors.forEach(color => { color[0] = 0; color[1] = 0; color[2] = 0; });
 
       // A slow olive-to-stone drift stays quiet until a link supplies its brand colors.
+      const pigments = [[89, 120, 99], [91, 112, 153], [153, 108, 99]];
       const ambientColors = Array.from({ length: rows }, (_, row) => {
-        const warmth = (Math.sin(time * 0.055 + row * 0.08) + 1) / 2;
-        return [83 + warmth * 28, 101 + warmth * 5, 80 + warmth * 16];
+        const phase = (time * 0.045 + row / rows * 3) % 3;
+        const index = Math.floor(phase);
+        const blend = (1 - Math.cos((phase - index) * Math.PI)) / 2;
+        return pigments[index].map((channel, component) =>
+          channel + (pigments[(index + 1) % 3][component] - channel) * blend
+        );
       });
 
       // Position and color evolve together; the strand colors lead the gathering sand.
@@ -263,7 +271,8 @@ export default function PaperAtmosphere() {
             x = t * (width + 120) - 60;
             y = height * (0.48 + (layer - 0.5) * (0.5 + 0.3 * (1 - gather)))
               + Math.sin(t * Math.PI * 2 + time * 0.07 + layer * 0.4) * height * 0.17
-              + Math.sin(t * Math.PI * 3 - time * 0.04) * height * 0.07 * gather;
+              + Math.sin(t * Math.PI * 3 - time * 0.04) * height * 0.07 * gather
+              + Math.sin(t * Math.PI * 4 + layer * 5 - time * 0.065) * height * 0.018 * gather;
           }
           if (snap || grain.x === null) {
             grain.x = x;
@@ -285,7 +294,7 @@ export default function PaperAtmosphere() {
 
       // One stroke per strand replaces thousands of individual canvas strokes.
       const connection = Math.pow(1 - formation, 1.7);
-      const lineOpacity = (0.065 + Math.sin(formation * Math.PI) * 0.18) * connection;
+      const lineOpacity = (0.16 + Math.sin(formation * Math.PI) * 0.18) * connection;
       context.lineWidth = 0.65;
       if (lineOpacity > 0.002) {
         context.globalAlpha = lineOpacity;
