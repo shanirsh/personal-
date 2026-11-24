@@ -186,8 +186,8 @@ export default function PaperAtmosphere() {
 
     function createGrains() {
       return Array.from({ length: rows * columns }, (_, index) => ({
-        u: (index * 0.61803398875) % 1,
-        depth: (index * 0.75487766625) % 1,
+        u: Math.floor(index / rows) / (columns - 1),
+        depth: (index % rows) / (rows - 1),
         row: index % rows,
         x: null, y: null, color: [83, 101, 80],
         jitter: Math.sin(index * 13.37),
@@ -268,18 +268,12 @@ export default function PaperAtmosphere() {
             x = centerX + point[0] * radius + grain.jitter * (0.55 + scattering);
             y = centerY + point[1] * radius + grain.verticalJitter * (0.55 + scattering);
           } else {
-            const t = (grain.u + time * (0.003 + grain.depth * 0.002)) % 1;
+            const t = grain.u;
             const layer = grain.depth;
-            x = t * (width + 160) - 80
-              + Math.sin(time * 0.11 + layer * 9) * 18;
-            y = layer * (height + 120) - 60
-              + Math.sin(t * Math.PI * 2 + time * 0.09 + layer * 3) * height * 0.055
-              + Math.cos(t * Math.PI * 4 - time * 0.065 + layer * 6) * 12;
-            // Wrap offscreen rather than dragging a grain across the page.
-            if (formation < 0.01 && grain.x !== null && Math.abs(x - grain.x) > width * 0.7) {
-              grain.x = x;
-              grain.y = y;
-            }
+            x = t * (width + 160) - 80;
+            y = height * (0.08 + layer * 0.84)
+              + Math.sin(t * Math.PI * 2 + time * 0.16 + layer * 2) * height * 0.11
+              + Math.sin(t * Math.PI + layer * 5 - time * 0.12) * height * 0.07;
           }
           if (snap || grain.x === null) {
             grain.x = x;
@@ -295,7 +289,22 @@ export default function PaperAtmosphere() {
         }
       }
 
-      // Leave the paper quiet at rest; reveal ink only as a link forms its mark.
+      // Six fine currents share their geometry and pigment with the logo particles.
+      // Fade their connections early in the morph to avoid a tangled mesh.
+      context.lineWidth = compact ? 0.85 : 1;
+      context.globalAlpha = 0.32 * Math.pow(1 - formation, 4);
+      for (let row = 1; row < rows; row += 4) {
+        context.strokeStyle = grains[row].paint;
+        context.beginPath();
+        for (let index = row; index < grains.length; index += rows) {
+          const grain = grains[index];
+          if (index === row) context.moveTo(grain.x, grain.y);
+          else context.lineTo(grain.x, grain.y);
+        }
+        context.stroke();
+      }
+
+      // Grains are visible only while the currents resolve into a hovered mark.
       const size = 0.95;
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
