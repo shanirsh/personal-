@@ -295,12 +295,11 @@ export default function PaperAtmosphere() {
         }
       }
 
-      // Sparse ink-like points at rest; the full field resolves the hovered mark.
-      const size = 1.3 - formation * 0.35;
+      // Leave the paper quiet at rest; reveal ink only as a link forms its mark.
+      const size = 0.95;
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
-        const ambientAlpha = index % 3 === 0 ? 0.48 : 0.19;
-        context.globalAlpha = ambientAlpha + formation * (0.705 - ambientAlpha);
+        context.globalAlpha = formation * formation * 0.705;
         context.fillStyle = grain.paint;
         context.fillRect(grain.x, grain.y, size, size);
       }
