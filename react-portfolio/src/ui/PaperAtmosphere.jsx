@@ -72,7 +72,7 @@ const logoSources = {
 };
 
 function sampleLogo(image, { mode, crop }) {
-  const source = crop || [0, 0, image.naturalWidth, image.naturalHeight];
+  const source = crop || [0, 0, image.naturalWidth || 300, image.naturalHeight || 300];
   const raster = document.createElement('canvas');
   const ratio = Math.min(300 / source[2], 300 / source[3]);
   raster.width = Math.max(1, Math.round(source[2] * ratio));
@@ -238,9 +238,9 @@ export default function PaperAtmosphere() {
       rowColors.forEach(color => { color[0] = 0; color[1] = 0; color[2] = 0; });
 
       // A slow olive-to-stone drift stays quiet until a link supplies its brand colors.
-      const pigments = [[89, 120, 99], [91, 112, 153], [153, 108, 99]];
+      const pigments = [[62, 122, 100], [83, 98, 165], [173, 99, 79]];
       const ambientColors = Array.from({ length: rows }, (_, row) => {
-        const phase = (time * 0.045 + row / rows * 3) % 3;
+        const phase = (time * 0.12 + row / rows * 3) % 3;
         const index = Math.floor(phase);
         const blend = (1 - Math.cos((phase - index) * Math.PI)) / 2;
         return pigments[index].map((channel, component) =>
@@ -294,7 +294,7 @@ export default function PaperAtmosphere() {
 
       // One stroke per strand replaces thousands of individual canvas strokes.
       const connection = Math.pow(1 - formation, 1.7);
-      const lineOpacity = (0.16 + Math.sin(formation * Math.PI) * 0.18) * connection;
+      const lineOpacity = (0.25 + Math.sin(formation * Math.PI) * 0.12) * connection;
       context.lineWidth = 0.65;
       if (lineOpacity > 0.002) {
         context.globalAlpha = lineOpacity;
