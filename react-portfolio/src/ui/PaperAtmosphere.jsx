@@ -152,7 +152,6 @@ export default function PaperAtmosphere() {
     const rows = 24;
     let compact = innerWidth <= 600;
     let columns = compact ? 96 : 140;
-    const rowColors = Array.from({ length: rows }, () => [0, 0, 0]);
     const logoSamples = {};
     let disposed = false;
 
@@ -187,7 +186,8 @@ export default function PaperAtmosphere() {
 
     function createGrains() {
       return Array.from({ length: rows * columns }, (_, index) => ({
-        u: Math.floor(index / rows) / columns,
+        u: (index * 0.61803398875) % 1,
+        depth: (index * 0.75487766625) % 1,
         row: index % rows,
         x: null, y: null, color: [83, 101, 80],
         jitter: Math.sin(index * 13.37),
@@ -239,9 +239,8 @@ export default function PaperAtmosphere() {
       if (!freeze) formation = snap ? Number(Boolean(shape))
         : formation + (Number(Boolean(shape)) - formation) * formationSettle;
       const scattering = Math.sin(formation * Math.PI) * 9;
-      rowColors.forEach(color => { color[0] = 0; color[1] = 0; color[2] = 0; });
 
-      // A slow olive-to-stone drift stays quiet until a link supplies its brand colors.
+      // Soft pigment currents gradually take on the hovered brand’s colors.
       const pigments = [[62, 122, 100], [83, 98, 165], [173, 99, 79]];
       const ambientColors = Array.from({ length: rows }, (_, row) => {
         const phase = (time * 0.12 + row / rows * 3) % 3;
@@ -252,7 +251,7 @@ export default function PaperAtmosphere() {
         );
       });
 
-      // Position and color evolve together; the strand colors lead the gathering sand.
+      // The ambient grains themselves gather into the logo.
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
         if (!freeze) {
@@ -269,14 +268,18 @@ export default function PaperAtmosphere() {
             x = centerX + point[0] * radius + grain.jitter * (0.55 + scattering);
             y = centerY + point[1] * radius + grain.verticalJitter * (0.55 + scattering);
           } else {
-            const t = (grain.u + time * 0.007) % 1;
-            const layer = grain.row / (rows - 1);
-            const gather = Math.sin(t * Math.PI) ** 2;
-            x = t * (width + 120) - 60;
-            y = height * (0.48 + (layer - 0.5) * (0.5 + 0.3 * (1 - gather)))
-              + Math.sin(t * Math.PI * 2 + time * 0.07 + layer * 0.4) * height * 0.17
-              + Math.sin(t * Math.PI * 3 - time * 0.04) * height * 0.07 * gather
-              + Math.sin(t * Math.PI * 4 + layer * 5 - time * 0.065) * height * 0.018 * gather;
+            const t = (grain.u + time * (0.003 + grain.depth * 0.002)) % 1;
+            const layer = grain.depth;
+            x = t * (width + 160) - 80
+              + Math.sin(time * 0.11 + layer * 9) * 18;
+            y = layer * (height + 120) - 60
+              + Math.sin(t * Math.PI * 2 + time * 0.09 + layer * 3) * height * 0.055
+              + Math.cos(t * Math.PI * 4 - time * 0.065 + layer * 6) * 12;
+            // Wrap offscreen rather than dragging a grain across the page.
+            if (formation < 0.01 && grain.x !== null && Math.abs(x - grain.x) > width * 0.7) {
+              grain.x = x;
+              grain.y = y;
+            }
           }
           if (snap || grain.x === null) {
             grain.x = x;
@@ -290,40 +293,14 @@ export default function PaperAtmosphere() {
           grain.color[2] += (blue - grain.color[2]) * (snap ? 1 : colorSettle);
           grain.paint = 'rgb(' + Math.round(grain.color[0]) + ',' + Math.round(grain.color[1]) + ',' + Math.round(grain.color[2]) + ')';
         }
-        const rowColor = rowColors[grain.row];
-        rowColor[0] += grain.color[0];
-        rowColor[1] += grain.color[1];
-        rowColor[2] += grain.color[2];
       }
 
-      // One stroke per strand replaces thousands of individual canvas strokes.
-      const connection = Math.pow(1 - formation, 1.7);
-      const lineOpacity = (0.25 + Math.sin(formation * Math.PI) * 0.12) * connection;
-      context.lineWidth = 0.65;
-      if (lineOpacity > 0.002) {
-        context.globalAlpha = lineOpacity;
-        const maxDistanceSquared = (width / 18) ** 2;
-        for (let row = 0; row < rows; row++) {
-          const color = rowColors[row];
-          context.strokeStyle = 'rgb(' + Math.round(color[0] / columns) + ',' + Math.round(color[1] / columns) + ',' + Math.round(color[2] / columns) + ')';
-          context.beginPath();
-          for (let index = row + rows; index < grains.length; index += rows) {
-            const grain = grains[index];
-            const preceding = grains[index - rows];
-            const dx = grain.x - preceding.x;
-            const dy = grain.y - preceding.y;
-            if (dx * dx + dy * dy < maxDistanceSquared) {
-              context.moveTo(preceding.x, preceding.y);
-              context.lineTo(grain.x, grain.y);
-            }
-          }
-          context.stroke();
-        }
-      }
-
-      context.globalAlpha = 0.055 + formation * 0.65;
-      const size = 0.5 + formation * 0.45;
-      for (const grain of grains) {
+      // Sparse ink-like points at rest; the full field resolves the hovered mark.
+      const size = 0.8 + formation * 0.15;
+      for (let index = 0; index < grains.length; index++) {
+        const grain = grains[index];
+        const ambientAlpha = index % 3 === 0 ? 0.27 : 0.065;
+        context.globalAlpha = ambientAlpha + formation * (0.705 - ambientAlpha);
         context.fillStyle = grain.paint;
         context.fillRect(grain.x, grain.y, size, size);
       }
