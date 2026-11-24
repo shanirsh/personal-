@@ -296,10 +296,10 @@ export default function PaperAtmosphere() {
       }
 
       // Sparse ink-like points at rest; the full field resolves the hovered mark.
-      const size = 0.8 + formation * 0.15;
+      const size = 1.3 - formation * 0.35;
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
-        const ambientAlpha = index % 3 === 0 ? 0.27 : 0.065;
+        const ambientAlpha = index % 3 === 0 ? 0.48 : 0.19;
         context.globalAlpha = ambientAlpha + formation * (0.705 - ambientAlpha);
         context.fillStyle = grain.paint;
         context.fillRect(grain.x, grain.y, size, size);
