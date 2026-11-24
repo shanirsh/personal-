@@ -60,6 +60,10 @@ const links = [
 // Original assets are sampled in the browser. Backgrounds and screenshot chrome
 // never become particles. Pale marks use charcoal so they read on ivory.
 const logoSources = {
+  linkedin: { src: '/images/hover-logos/linkedin.svg', mode: 'alpha' },
+  email: { src: '/images/hover-logos/gmail.svg', mode: 'alpha' },
+  x: { src: '/images/hover-logos/x.svg', mode: 'alpha' },
+  mastercard: { src: '/images/hover-logos/mastercard.svg', mode: 'alpha' },
   github: { src: '/images/hover-logos/github.svg', mode: 'alpha' },
   chat: { src: '/images/hover-logos/calendly.svg', mode: 'alpha' },
   prismo: { src: '/images/prismo-logo.png', mode: 'color' },
