@@ -289,22 +289,7 @@ export default function PaperAtmosphere() {
         }
       }
 
-      // Six fine currents share their geometry and pigment with the logo particles.
-      // Fade their connections early in the morph to avoid a tangled mesh.
-      context.lineWidth = compact ? 0.85 : 1;
-      context.globalAlpha = 0.32 * Math.pow(1 - formation, 4);
-      for (let row = 1; row < rows; row += 4) {
-        context.strokeStyle = grains[row].paint;
-        context.beginPath();
-        for (let index = row; index < grains.length; index += rows) {
-          const grain = grains[index];
-          if (index === row) context.moveTo(grain.x, grain.y);
-          else context.lineTo(grain.x, grain.y);
-        }
-        context.stroke();
-      }
-
-      // Grains are visible only while the currents resolve into a hovered mark.
+      // The paper remains unobstructed; particles appear only for a hovered mark.
       const size = 0.95;
       for (let index = 0; index < grains.length; index++) {
         const grain = grains[index];
